@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Rule Format Conversion Tool</title>
+</head>
+<body>
+    <h1>Cyber Rule Format Conversion Tool</h1>
+    <textarea id="inputRule" rows="10" cols="50" placeholder="Paste your rule here"></textarea><br>
+    <select id="selected_format">
+    <option value="KQL">KQL (Kusto Query Language) - Used by: Azure Sentinel, Azure Data Explorer</option>
+    <option value="SPL">SPL (Search Processing Language) - Used by: Splunk</option>
+    <option value="Lucene">Lucene Query Syntax - Used by: Elasticsearch (Elastic Stack, Kibana)</option>
+    <option value="ESM">ESM Rule Language - Used by: ArcSight ESM</option>
+    <option value="AQL">QRadar Ariel Query Language (AQL) - Used by: IBM QRadar</option>
+    <option value="LogQL">LogQL - Used by: Loki</option>
+    <option value="Sigma">Sigma (Generic rule format for SIEMs)</option>
+    <option value="EQL">EQL (Event Query Language) - Used by: Elastic Security</option>
+    <option value="Zeek">Zeek Scripting Language - Used by: Bro/Zeek</option>
+    <option value="Cuckoo">Cuckoo Signatures (Python-based) - Used by: Cuckoo Sandbox</option>
+    <option value="Snort_Suricata">Snort and Suricata Rules Language - Used by: Snort and Suricata IDS/IPS</option>
+    <option value="FAQUE">FAQUE (For Advanced Query and Exploration) - Used by: FireEye</option>
+    <option value="MISP_JSON">MISP JSON Format - Used by: MISP (Malware Information Sharing Platform & Threat Sharing)</option>
+    <option value="STIX_JSON">STIX JSON Format - Structured Threat Information eXpression</option>
+    <option value="OpenDXL">OpenDXL - Used by: McAfee and others (a messaging framework)</option>
+    <option value="OpenIOC">OpenIOC XML Schema - Created by Mandiant</option>
+    <option value="TAXII">TAXII - Protocol for the exchange of cyber threat information (often used with STIX)</option>
+    <option value="YARA">YARA - Used by malware researchers for crafting rules to identify malware samples</option>
+    <option value="Volatility">Volatility Plugins (Python) - Used by: Volatility for memory forensics</option>
+</select><br>
+    <button onclick="convertRule()">Convert</button><br>
+    <textarea id="outputRule" rows="10" cols="50" placeholder="Converted rule will appear here" readonly></textarea>
+
+    <script>
+        async function convertRule() {
+            const inputRule = document.getElementById('inputRule').value;
+            const formatSelect = document.getElementById('formatSelect').value;
+            const response = await fetch('/convert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `user_input=${encodeURIComponent(inputRule)}&selected_format=${encodeURIComponent(formatSelect)}`
+            });
+            const data = await response.json();
+            document.getElementById('outputRule').value = data.converted_rule;
+        }
+    </script>
+</body>
+</html>
