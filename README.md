@@ -45,7 +45,7 @@ The design of the CRFCT allows for the easy addition of new rule formats, ensuri
 The CRFCT tool has a simple web UI where users can paste a rule (or multiple rules) in a text box, select the desired output format from a dropdown menu, and click the 'convert' button to initiate the conversion. The tool will utilize the ChatGPT API, with the GPT-4 model, to perform the rule conversions.
 
 ## Usage Instructions:
-Open the RFCT web UI.
+Open the CRFCT web UI.
 
 Paste the rule(s) to be converted in the input text box.
 
